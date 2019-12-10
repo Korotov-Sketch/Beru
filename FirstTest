@@ -1,21 +1,57 @@
 package ru.Beru;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class FirstTest {
+public  ChromeDriver driver;
+    @Before
+    public void SetUp(){
+        System.setProperty("webdriver.chrome.driver","D:\\chromedriver.exe");
+        driver = new ChromeDriver();
+    }
 
     @Test
     public void firstTest() {
-        System.setProperty("webdriver.chrome.driver","D:\\chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
         driver.get("https://beru.ru/");
+        WebElement signin = driver.findElement(By.className("_3odNv2Dw2n"));
+        signin.click();
 
-        String title = driver.getTitle();
-        System.out.println(title);
+        WebDriverWait wat = new WebDriverWait(driver,10);
+        wat.until(ExpectedConditions.visibilityOfElementLocated(By.id("passp-field-login")));
 
+        WebElement writer = driver.findElement(By.id("passp-field-login"));
+        writer.sendKeys("olegkorotov1999@yandex.ru");
+        signin = driver.findElementByClassName("passp-sign-in-button");
+        signin.click();
+
+        wat.until(ExpectedConditions.visibilityOfElementLocated(By.id("passp-field-passwd")));
+        writer = driver.findElement(By.id("passp-field-passwd"));
+        writer.sendKeys("Oleg23081999");
+        signin = driver.findElementByClassName("passp-form-button");
+        signin.click();
+
+        wat.until(ExpectedConditions.visibilityOfElementLocated(By.className("pFhTbV17qj")));
+        writer = driver.findElement(By.className("pFhTbV17qj"));
+        if(writer.getText()=="Мой профиль"){
+            System.out.println(writer.getText());
+        }
+    }
+
+    @After
+    public void Leave(){
         driver.quit();
     }
 
 }
+
