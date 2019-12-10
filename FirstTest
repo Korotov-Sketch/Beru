@@ -1,0 +1,21 @@
+package ru.Beru;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class FirstTest {
+
+    @Test
+    public void firstTest() {
+        System.setProperty("webdriver.chrome.driver","D:\\chromedriver.exe");
+        ChromeDriver driver = new ChromeDriver();
+        driver.get("https://beru.ru/");
+
+        String title = driver.getTitle();
+        System.out.println(title);
+
+        driver.quit();
+    }
+
+}
